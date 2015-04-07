@@ -201,6 +201,20 @@ void serial_readwrite_task(void *pvParameters)
 	}
 }
 
+void testTask1(void *pvParameters)
+{
+    while(1){
+        //vTaskDelay(10000);
+    }
+}
+
+void testTask2(void *pvParameters)
+{
+    while(1){
+        //vTaskDelay(100000);
+    }
+}
+
 int main()
 {
 	logfile = open("log", 4);
@@ -247,6 +261,15 @@ int main()
 	            (signed portCHAR *) "Serial Read/Write",
 	            512 /* stack size */, NULL,
 	            tskIDLE_PRIORITY + 10, NULL);
+
+    xTaskCreate(testTask1, 
+                (signed portCHAR *) "testTask1",
+                512, NULL, tskIDLE_PRIORITY + 1, NULL);
+
+    
+    xTaskCreate(testTask2, 
+                (signed portCHAR *) "testTask2",
+                512, NULL, tskIDLE_PRIORITY + 1, NULL);
 
 	/* Start running the tasks. */
 	vTaskStartScheduler();
